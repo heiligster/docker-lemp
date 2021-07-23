@@ -1,3 +1,8 @@
+## Docker LEMP
+
+The projects primary goal is to learn docker and setup my own docker stack for local development. 
+Many thanks to @osteel for his great explanation about this topic and his very well documented blog posts at https://tech.osteel.me/
+
 ### Useful commands
 Start containers in background\
 `docker compose up -d`
