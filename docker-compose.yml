@@ -2,14 +2,16 @@ version: '3.8'
 
 services:
     nginx:
-        image: nginx:1.21.1
+        image: nginx:1.21.1-alpine
         ports: 
             - 80:80
         volumes:
             - ./www:/var/www
             - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+            - phpmyadmindata:/var/www/phpmyadmin
         depends_on:
             - php-fpm
+            - phpmyadmin
 
     php-fpm:
         build: ./.docker/php
@@ -38,14 +40,15 @@ services:
             retries: 10
 
     phpmyadmin:
-        image: phpmyadmin/phpmyadmin:5
-        ports:
-            - 8080:80
+        image: phpmyadmin/phpmyadmin:5-fpm-alpine
         environment:
             PMA_HOST: mysql
+        volumes:
+            - phpmyadmindata:/var/www/html
         depends_on:
             mysql:
                 condition: service_healthy
 
 volumes:
     mysqldata:
+    phpmyadmindata:
